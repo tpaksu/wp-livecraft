@@ -1,0 +1,22 @@
+{
+	"name": "wp-livecraft",
+	"version": "0.1.0",
+	"private": true,
+	"description": "Frontend inline block editing for WordPress",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"lint:js": "wp-scripts lint-js src/",
+		"lint:js:fix": "wp-scripts lint-js src/ --fix",
+		"lint:css": "wp-scripts lint-style src/",
+		"lint:css:fix": "wp-scripts lint-style src/ --fix",
+		"lint:php": "composer phpcs",
+		"lint:php:fix": "composer phpcbf",
+		"lint": "npm run lint:js && npm run lint:css && npm run lint:php"
+	},
+	"devDependencies": {
+		"@wordpress/icons": "^12.2.0",
+		"@wordpress/media-utils": "^5.44.0",
+		"@wordpress/scripts": "^30.0.0"
+	}
+}

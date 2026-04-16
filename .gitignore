@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Session
+.remember/

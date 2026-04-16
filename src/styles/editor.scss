@@ -1,0 +1,307 @@
+// ============================================================
+// Livecraft - Frontend Inline Block Editing Styles
+// ============================================================
+
+$livecraft-primary: #007cba;
+$livecraft-primary-hover: #0063a1;
+$livecraft-success: #00a32a;
+$livecraft-error: #cc1818;
+$livecraft-toolbar-z: 100000;
+$livecraft-panel-z: 99999;
+$livecraft-overlay-z: 99998;
+
+// ============================================================
+// Toolbar
+// ============================================================
+
+// Base toolbar: pill-shaped bar, bottom center.
+.livecraft-toolbar {
+	position: fixed;
+	bottom: 16px;
+	right: 16px;
+	z-index: $livecraft-toolbar-z;
+	display: flex;
+	gap: 6px;
+	align-items: center;
+	background: #fff;
+	border-radius: 8px;
+	padding: 4px 6px;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.06);
+	animation: livecraftFadeIn 0.2s ease;
+
+	.components-button {
+		border-radius: 6px;
+		height: 32px;
+		padding: 0 14px;
+		font-size: 13px;
+		font-weight: 500;
+		white-space: nowrap;
+
+		&.is-primary {
+			background: $livecraft-primary;
+			color: #fff;
+
+			&:hover {
+				background: $livecraft-primary-hover;
+			}
+		}
+	}
+
+	// Edit toggle in idle state.
+	> .livecraft-toolbar__toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+	}
+}
+
+// Editing state: extra styles for action buttons.
+.livecraft-toolbar--editing {
+	.components-button {
+		&.is-tertiary {
+			color: #757575;
+		}
+
+		// Icon-only buttons.
+		&.livecraft-toolbar__new,
+		&.livecraft-toolbar__exit {
+			width: 32px;
+			padding: 0;
+		}
+	}
+}
+
+.livecraft-toolbar__new-menu {
+	.components-menu-group {
+		padding: 4px 0;
+	}
+
+	.components-menu-item__button {
+		min-width: 160px;
+	}
+}
+
+// ============================================================
+// Save status indicator
+// ============================================================
+
+.livecraft-save-indicator {
+	padding: 6px 14px;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: 500;
+	white-space: nowrap;
+	background: #fff;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	animation: livecraftFadeIn 0.2s ease;
+
+	&--saving {
+		color: #757575;
+	}
+
+	&--saved {
+		color: $livecraft-success;
+	}
+
+	&--unsaved {
+		color: #b26200;
+	}
+
+	&--error {
+		color: $livecraft-error;
+	}
+}
+
+// ============================================================
+// Inline editor - blends into the content area
+// ============================================================
+
+#livecraft-inline-editor {
+	min-height: 200px;
+
+	// Let the block editor inherit theme typography.
+	.editor-styles-wrapper {
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+		color: inherit;
+	}
+
+	// Hide block selection outlines for a seamless inline feel.
+	.block-editor-block-list__block {
+		outline: none !important;
+		box-shadow: none !important;
+
+		&::after {
+			display: none !important;
+		}
+
+		&.is-selected,
+		&.is-hovered,
+		&.has-child-selected {
+			outline: none !important;
+			box-shadow: none !important;
+		}
+	}
+}
+
+// ============================================================
+// Editable title
+// ============================================================
+
+.livecraft-editable-title {
+	outline: none;
+	cursor: text;
+
+	&:empty::before {
+		content: "Add title...";
+		color: #a0a0a0;
+		pointer-events: none;
+	}
+}
+
+.livecraft-inline-error {
+	padding: 16px;
+	color: $livecraft-error;
+	text-align: center;
+}
+
+// ============================================================
+// Overlay backdrop (for new content panel)
+// ============================================================
+
+.livecraft-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: $livecraft-overlay-z;
+	background: rgba(0, 0, 0, 0.25);
+	animation: livecraftFadeIn 0.2s ease;
+
+	&--full {
+		background: rgba(0, 0, 0, 0.5);
+	}
+}
+
+// ============================================================
+// New Content Panel
+// ============================================================
+
+.livecraft-new-panel {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 800px;
+	max-width: 92vw;
+	height: 85vh;
+	z-index: $livecraft-panel-z;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+	display: flex;
+	flex-direction: column;
+	animation: livecraftScaleIn 0.25s ease;
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 12px 20px;
+		border-bottom: 1px solid #e0e0e0;
+		flex-shrink: 0;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 16px;
+		font-weight: 600;
+		color: #1e1e1e;
+	}
+
+	&__actions {
+		display: flex;
+		gap: 8px;
+		align-items: center;
+	}
+
+	&__error {
+		padding: 10px 20px;
+		background: #fcecec;
+		color: $livecraft-error;
+		font-size: 13px;
+		border-bottom: 1px solid #f5c6c6;
+	}
+
+	&__title-input {
+		padding: 16px 20px 0;
+		flex-shrink: 0;
+	}
+
+	&__title-field {
+		.components-text-control__input {
+			font-size: 24px;
+			font-weight: 600;
+			border: none;
+			border-bottom: 2px solid #e0e0e0;
+			border-radius: 0;
+			padding: 8px 0;
+
+			&:focus {
+				border-bottom-color: $livecraft-primary;
+				box-shadow: none;
+			}
+		}
+	}
+
+	&__content {
+		flex: 1;
+		overflow-y: auto;
+		padding: 20px;
+
+		.editor-styles-wrapper {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+			font-size: 16px;
+			line-height: 1.6;
+		}
+	}
+}
+
+// ============================================================
+// Animations
+// ============================================================
+
+@keyframes livecraftFadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes livecraftScaleIn {
+	from {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
+
+// ============================================================
+// Admin bar offset
+// ============================================================
+
+.admin-bar {
+	.livecraft-new-panel {
+		top: calc(50% + 16px);
+	}
+}

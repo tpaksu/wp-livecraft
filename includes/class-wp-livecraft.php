@@ -21,24 +21,24 @@ class WP_Livecraft {
 	 *
 	 * @var bool
 	 */
-	private static $should_instrument = false;
+	private $should_instrument = false;
 
 	/**
 	 * Initialize all hooks.
 	 */
-	public static function init() {
-		add_action( 'template_redirect', array( 'WP_Livecraft', 'maybe_enable' ) );
-		add_action( 'wp_enqueue_scripts', array( 'WP_Livecraft', 'enqueue_assets' ) );
-		add_filter( 'the_title', array( 'WP_Livecraft', 'wrap_title' ), 10, 2 );
-		add_filter( 'the_content', array( 'WP_Livecraft', 'wrap_content' ), 999 );
-		add_action( 'wp_footer', array( 'WP_Livecraft', 'render_mount_point' ) );
-		add_filter( 'body_class', array( 'WP_Livecraft', 'add_body_class' ) );
+	public function init() {
+		add_action( 'template_redirect', array( $this, 'maybe_enable' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		add_filter( 'the_title', array( $this, 'wrap_title' ), 10, 2 );
+		add_filter( 'the_content', array( $this, 'wrap_content' ), 999 );
+		add_action( 'wp_footer', array( $this, 'render_mount_point' ) );
+		add_filter( 'body_class', array( $this, 'add_body_class' ) );
 	}
 
 	/**
 	 * Determine early whether to instrument the current request.
 	 */
-	public static function maybe_enable() {
+	public function maybe_enable() {
 		if ( is_admin() ) {
 			return;
 		}
@@ -49,14 +49,14 @@ class WP_Livecraft {
 			return;
 		}
 
-		self::$should_instrument = true;
+		$this->should_instrument = true;
 	}
 
 	/**
 	 * Enqueue frontend scripts and styles for authorized users.
 	 */
-	public static function enqueue_assets() {
-		if ( ! self::$should_instrument ) {
+	public function enqueue_assets() {
+		if ( ! $this->should_instrument ) {
 			return;
 		}
 
@@ -82,7 +82,7 @@ class WP_Livecraft {
 
 		// Get block editor settings (theme styles, block categories, etc.)
 		// so the inline editor matches the admin editor's configuration.
-		$editor_settings = self::get_editor_settings();
+		$editor_settings = $this->get_editor_settings();
 
 		// Set block categories on wp-blocks BEFORE any block editor scripts run.
 		// This prevents "invalid category" warnings from plugins like WooCommerce
@@ -119,7 +119,6 @@ class WP_Livecraft {
 			);
 		}
 
-
 		// Set up wp-api-fetch nonce and root URL on the frontend.
 		wp_add_inline_script(
 			'wp-api-fetch',
@@ -140,7 +139,7 @@ class WP_Livecraft {
 		);
 
 		// Collect editor style URLs for dynamic loading when edit mode activates.
-		$editor_style_urls = self::get_editor_style_urls();
+		$editor_style_urls = $this->get_editor_style_urls();
 
 		wp_add_inline_script(
 			'wp-livecraft-editor',
@@ -163,7 +162,7 @@ class WP_Livecraft {
 	 *
 	 * @return array Associative array of handle => URL.
 	 */
-	private static function get_editor_style_urls() {
+	private function get_editor_style_urls() {
 		// Only load editor UI styles (toolbars, popovers, selection).
 		// Do NOT load wp-edit-blocks or wp-block-library: the theme's existing
 		// frontend styles already handle block appearance, and editor styles
@@ -194,7 +193,7 @@ class WP_Livecraft {
 	 *
 	 * @return array Block editor settings.
 	 */
-	private static function get_editor_settings() {
+	private function get_editor_settings() {
 		$post    = get_post();
 		$context = new WP_Block_Editor_Context( array( 'post' => $post ) );
 
@@ -211,8 +210,8 @@ class WP_Livecraft {
 	 * @param int    $post_id The post ID.
 	 * @return string
 	 */
-	public static function wrap_title( $title, $post_id ) {
-		if ( ! self::$should_instrument || ! in_the_loop() || ! is_singular() ) {
+	public function wrap_title( $title, $post_id ) {
+		if ( ! $this->should_instrument || ! in_the_loop() || ! is_singular() ) {
 			return $title;
 		}
 
@@ -233,8 +232,8 @@ class WP_Livecraft {
 	 * @param string $content The rendered post content.
 	 * @return string
 	 */
-	public static function wrap_content( $content ) {
-		if ( ! self::$should_instrument ) {
+	public function wrap_content( $content ) {
+		if ( ! $this->should_instrument ) {
 			return $content;
 		}
 
@@ -252,8 +251,8 @@ class WP_Livecraft {
 	/**
 	 * Output the React mount point in the footer.
 	 */
-	public static function render_mount_point() {
-		if ( ! self::$should_instrument ) {
+	public function render_mount_point() {
+		if ( ! $this->should_instrument ) {
 			return;
 		}
 
@@ -266,8 +265,8 @@ class WP_Livecraft {
 	 * @param array $classes Existing body classes.
 	 * @return array
 	 */
-	public static function add_body_class( $classes ) {
-		if ( self::$should_instrument ) {
+	public function add_body_class( $classes ) {
+		if ( $this->should_instrument ) {
 			$classes[] = 'wp-livecraft-enabled';
 		}
 		return $classes;

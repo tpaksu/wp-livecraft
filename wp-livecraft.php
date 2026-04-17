@@ -21,6 +21,11 @@ define( 'WP_LIVECRAFT_VERSION', '0.1.0' );
 define( 'WP_LIVECRAFT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WP_LIVECRAFT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-require_once WP_LIVECRAFT_PLUGIN_DIR . 'includes/class-livecraft.php';
+require_once WP_LIVECRAFT_PLUGIN_DIR . 'includes/class-wp-livecraft.php';
 
-add_action( 'plugins_loaded', array( 'WP_Livecraft', 'init' ) );
+add_action(
+	'plugins_loaded',
+	static function () {
+		( new WP_Livecraft() )->init();
+	}
+);

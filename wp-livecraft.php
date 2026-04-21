@@ -3,7 +3,7 @@
  * Plugin Name: WP Livecraft
  * Plugin URI:  https://github.com/tpaksu/wp-livecraft
  * Description: Edit your WordPress content directly on the frontend. Click any block, edit it inline, save without leaving the page.
- * Version:     0.1.0
+ * Version:     0.1.1
  * Author:      Taha Paksu
  * Author URI:  https://github.com/tpaksu
  * License:     GPL-2.0-or-later
@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WP_LIVECRAFT_VERSION', '0.1.0' );
+define( 'WP_LIVECRAFT_VERSION', '0.1.1' );
 define( 'WP_LIVECRAFT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WP_LIVECRAFT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 

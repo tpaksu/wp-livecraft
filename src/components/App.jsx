@@ -7,18 +7,18 @@ import InlineEditor from './InlineEditor';
 import { createPost, deletePost } from '../utils/api';
 
 export default function App() {
-	const autoEdit = window.location.hash === '#livecraft-edit';
+	const autoEdit = window.location.hash === '#fbedit-edit';
 	const [ editMode, setEditMode ] = useState( autoEdit );
 
 	// Restore scroll position after exiting edit mode.
 	useEffect( () => {
 		const savedScroll = window.sessionStorage.getItem(
-			'livecraft-scroll'
+			'fbedit-scroll'
 		);
 		if ( savedScroll === null ) {
 			return;
 		}
-		window.sessionStorage.removeItem( 'livecraft-scroll' );
+		window.sessionStorage.removeItem( 'fbedit-scroll' );
 		window.scrollTo( 0, parseInt( savedScroll, 10 ) );
 	}, [] );
 	const [ saveStatus, setSaveStatus ] = useState( 'idle' );
@@ -31,11 +31,11 @@ export default function App() {
 	} );
 	const editorRef = useRef( null );
 
-	const postType = window.livecraft?.postType || 'post';
+	const postType = window.fbedit?.postType || 'post';
 	const typeLabel =
 		postType === 'page'
-			? __( 'page', 'livecraft' )
-			: __( 'post', 'livecraft' );
+			? __( 'page', 'frontend-block-editor' )
+			: __( 'post', 'frontend-block-editor' );
 
 	const handleToggleEditMode = useCallback( () => {
 		setEditMode( true );
@@ -51,29 +51,29 @@ export default function App() {
 	const handlePublish = useCallback( () => {
 		setConfirmAction( {
 			type: 'publish',
-			title: __( 'Publish', 'livecraft' ),
+			title: __( 'Publish', 'frontend-block-editor' ),
 			message:
-				__( 'Are you sure you want to publish this', 'livecraft' ) +
+				__( 'Are you sure you want to publish this', 'frontend-block-editor' ) +
 				' ' +
 				typeLabel +
-				__( '? It will be publicly visible.', 'livecraft' ),
-			confirmLabel: __( 'Publish', 'livecraft' ),
+				__( '? It will be publicly visible.', 'frontend-block-editor' ),
+			confirmLabel: __( 'Publish', 'frontend-block-editor' ),
 		} );
 	}, [ typeLabel ] );
 
 	const handleSaveDraft = useCallback( () => {
 		setConfirmAction( {
 			type: 'draft',
-			title: __( 'Switch to Draft', 'livecraft' ),
+			title: __( 'Switch to Draft', 'frontend-block-editor' ),
 			message:
-				__( 'This will unpublish the', 'livecraft' ) +
+				__( 'This will unpublish the', 'frontend-block-editor' ) +
 				' ' +
 				typeLabel +
 				__(
 					'. It will no longer be publicly accessible.',
-					'livecraft'
+					'frontend-block-editor'
 				),
-			confirmLabel: __( 'Switch to Draft', 'livecraft' ),
+			confirmLabel: __( 'Switch to Draft', 'frontend-block-editor' ),
 		} );
 	}, [ typeLabel ] );
 
@@ -96,23 +96,23 @@ export default function App() {
 			const isPublish = action.type === 'publish';
 			setResultInfo( {
 				title: isPublish
-					? __( 'Published!', 'livecraft' )
-					: __( 'Switched to Draft', 'livecraft' ),
+					? __( 'Published!', 'frontend-block-editor' )
+					: __( 'Switched to Draft', 'frontend-block-editor' ),
 				message: isPublish
-					? __( 'Your', 'livecraft' ) +
+					? __( 'Your', 'frontend-block-editor' ) +
 					  ' ' +
 					  typeLabel +
 					  ' ' +
-					  __( 'is now live.', 'livecraft' )
-					: __( 'Your', 'livecraft' ) +
+					  __( 'is now live.', 'frontend-block-editor' )
+					: __( 'Your', 'frontend-block-editor' ) +
 					  ' ' +
 					  typeLabel +
 					  ' ' +
-					  __( 'has been switched to draft.', 'livecraft' ),
+					  __( 'has been switched to draft.', 'frontend-block-editor' ),
 				link: result.link,
 				linkLabel: isPublish
-					? __( 'View', 'livecraft' ) + ' ' + typeLabel
-					: __( 'Preview', 'livecraft' ) + ' ' + typeLabel,
+					? __( 'View', 'frontend-block-editor' ) + ' ' + typeLabel
+					: __( 'Preview', 'frontend-block-editor' ) + ' ' + typeLabel,
 			} );
 		}
 	}, [ confirmAction, typeLabel ] );
@@ -134,7 +134,7 @@ export default function App() {
 	const [ exitConfirm, setExitConfirm ] = useState( false );
 
 	const doExit = useCallback( () => {
-		if ( window.location.hash === '#livecraft-edit' ) {
+		if ( window.location.hash === '#fbedit-edit' ) {
 			window.history.replaceState(
 				null,
 				'',
@@ -142,7 +142,7 @@ export default function App() {
 			);
 		}
 		window.sessionStorage.setItem(
-			'livecraft-scroll',
+			'fbedit-scroll',
 			String( window.scrollY )
 		);
 		window.location.reload();
@@ -152,13 +152,13 @@ export default function App() {
 		if ( window.history.length > 1 ) {
 			window.history.back();
 		} else {
-			window.location.href = window.livecraft?.siteUrl || '/';
+			window.location.href = window.fbedit?.siteUrl || '/';
 		}
 	}, [] );
 
 	const handleExit = useCallback( () => {
 		const { postId: currentPostId, postType: currentPostType } =
-			window.livecraft;
+			window.fbedit;
 
 		// New post with no content: delete the draft and go back.
 		if ( autoEdit && editorRef.current?.isEmpty() ) {
@@ -207,7 +207,7 @@ export default function App() {
 	const handleNewContent = useCallback( async ( type ) => {
 		const result = await createPost( type, '', '', 'draft' );
 		if ( result.link ) {
-			window.location.href = result.link + '#livecraft-edit';
+			window.location.href = result.link + '#fbedit-edit';
 		}
 	}, [] );
 
@@ -242,16 +242,16 @@ export default function App() {
 				<Modal
 					title={ confirmAction.title }
 					onRequestClose={ handleCancelConfirm }
-					className="livecraft-confirm-modal"
+					className="fbedit-confirm-modal"
 					size="small"
 				>
 					<p>{ confirmAction.message }</p>
-					<div className="livecraft-confirm-modal__actions">
+					<div className="fbedit-confirm-modal__actions">
 						<Button
 							variant="tertiary"
 							onClick={ handleCancelConfirm }
 						>
-							{ __( 'Cancel', 'livecraft' ) }
+							{ __( 'Cancel', 'frontend-block-editor' ) }
 						</Button>
 						<Button variant="primary" onClick={ handleConfirm }>
 							{ confirmAction.confirmLabel }
@@ -264,29 +264,29 @@ export default function App() {
 				<Modal
 					title={ resultInfo.title }
 					onRequestClose={ handleCloseResult }
-					className="livecraft-result-modal"
+					className="fbedit-result-modal"
 					size="small"
 				>
 					<p>{ resultInfo.message }</p>
 					{ resultInfo.link && (
-						<div className="livecraft-result-modal__url">
-							<code className="livecraft-result-modal__link">
+						<div className="fbedit-result-modal__url">
+							<code className="fbedit-result-modal__link">
 								{ resultInfo.link }
 							</code>
 							<Button
 								icon={ copySmall }
-								label={ __( 'Copy URL', 'livecraft' ) }
+								label={ __( 'Copy URL', 'frontend-block-editor' ) }
 								onClick={ handleCopyLink }
 								size="small"
 							/>
 						</div>
 					) }
-					<div className="livecraft-result-modal__actions">
+					<div className="fbedit-result-modal__actions">
 						<Button
 							variant="tertiary"
 							onClick={ handleCloseResult }
 						>
-							{ __( 'Done', 'livecraft' ) }
+							{ __( 'Done', 'frontend-block-editor' ) }
 						</Button>
 						{ resultInfo.link && (
 							<Button
@@ -305,29 +305,29 @@ export default function App() {
 
 			{ exitConfirm && (
 				<Modal
-					title={ __( 'Unsaved Changes', 'livecraft' ) }
+					title={ __( 'Unsaved Changes', 'frontend-block-editor' ) }
 					onRequestClose={ handleExitCancel }
-					className="livecraft-confirm-modal"
+					className="fbedit-confirm-modal"
 					size="small"
 				>
 					<p>
 						{ __(
 							'You have unsaved changes. What would you like to do?',
-							'livecraft'
+							'frontend-block-editor'
 						) }
 					</p>
-					<div className="livecraft-confirm-modal__actions">
+					<div className="fbedit-confirm-modal__actions">
 						<Button variant="tertiary" onClick={ handleExitCancel }>
-							{ __( 'Cancel', 'livecraft' ) }
+							{ __( 'Cancel', 'frontend-block-editor' ) }
 						</Button>
 						<Button
 							variant="secondary"
 							onClick={ handleExitDiscard }
 						>
-							{ __( 'Discard', 'livecraft' ) }
+							{ __( 'Discard', 'frontend-block-editor' ) }
 						</Button>
 						<Button variant="primary" onClick={ handleExitSave }>
-							{ __( 'Save & Exit', 'livecraft' ) }
+							{ __( 'Save & Exit', 'frontend-block-editor' ) }
 						</Button>
 					</div>
 				</Modal>

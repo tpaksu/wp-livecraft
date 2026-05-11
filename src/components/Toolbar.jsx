@@ -18,13 +18,13 @@ function SaveIndicator( { status } ) {
 	}
 
 	const labels = {
-		unsaved: __( 'Unsaved changes', 'livecraft' ),
-		saving: __( 'Saving…', 'livecraft' ),
-		saved: __( 'Saved', 'livecraft' ),
-		error: __( 'Save failed', 'livecraft' ),
+		unsaved: __( 'Unsaved changes', 'frontend-block-editor' ),
+		saving: __( 'Saving…', 'frontend-block-editor' ),
+		saved: __( 'Saved', 'frontend-block-editor' ),
+		error: __( 'Save failed', 'frontend-block-editor' ),
 	};
 
-	const className = `livecraft-save-indicator livecraft-save-indicator--${ status }`;
+	const className = `fbedit-save-indicator fbedit-save-indicator--${ status }`;
 
 	return <span className={ className }>{ labels[ status ] || '' }</span>;
 }
@@ -32,23 +32,23 @@ function SaveIndicator( { status } ) {
 function NewContentDropdown( { busy, wrapAction, onNewContent } ) {
 	return (
 		<Dropdown
-			className="livecraft-toolbar__new-dropdown"
-			contentClassName="livecraft-toolbar__new-menu"
+			className="fbedit-toolbar__new-dropdown"
+			contentClassName="fbedit-toolbar__new-menu"
 			popoverProps={ { placement: 'top-end' } }
 			renderToggle={ ( { isOpen, onToggle } ) => (
 				<Button
-					className="livecraft-toolbar__new"
+					className="fbedit-toolbar__new"
 					icon={ plus }
 					onClick={ onToggle }
 					aria-expanded={ isOpen }
 					disabled={ busy }
 					variant="secondary"
 				>
-					{ __( 'Create New', 'livecraft' ) }
+					{ __( 'Create New', 'frontend-block-editor' ) }
 				</Button>
 			) }
 			renderContent={ ( { onClose: closeMenu } ) => (
-				<MenuGroup className="livecraft-toolbar__new-menu-group">
+				<MenuGroup className="fbedit-toolbar__new-menu-group">
 					<MenuItem
 						icon={ post }
 						disabled={ busy }
@@ -57,7 +57,7 @@ function NewContentDropdown( { busy, wrapAction, onNewContent } ) {
 							wrapAction( () => onNewContent( 'post' ) )();
 						} }
 					>
-						{ __( 'New Post', 'livecraft' ) }
+						{ __( 'New Post', 'frontend-block-editor' ) }
 					</MenuItem>
 					<MenuItem
 						icon={ page }
@@ -67,7 +67,7 @@ function NewContentDropdown( { busy, wrapAction, onNewContent } ) {
 							wrapAction( () => onNewContent( 'page' ) )();
 						} }
 					>
-						{ __( 'New Page', 'livecraft' ) }
+						{ __( 'New Page', 'frontend-block-editor' ) }
 					</MenuItem>
 				</MenuGroup>
 			) }
@@ -101,18 +101,18 @@ export default function Toolbar( {
 		}
 	};
 
-	const postType = window.livecraft?.postType || 'post';
+	const postType = window.fbedit?.postType || 'post';
 	const editLabel =
 		postType === 'page'
-			? __( 'Edit Page', 'livecraft' )
-			: __( 'Edit Post', 'livecraft' );
+			? __( 'Edit Page', 'frontend-block-editor' )
+			: __( 'Edit Post', 'frontend-block-editor' );
 
 	// Not in edit mode: show edit button and new content dropdown.
 	if ( ! editMode ) {
 		return (
-			<div className="livecraft-toolbar livecraft-toolbar--idle">
+			<div className="fbedit-toolbar fbedit-toolbar--idle">
 				<Button
-					className="livecraft-toolbar__toggle"
+					className="fbedit-toolbar__toggle"
 					icon={ pencil }
 					onClick={ onToggleEditMode }
 					variant="secondary"
@@ -132,21 +132,21 @@ export default function Toolbar( {
 	const isPublished = postStatus === 'publish';
 
 	return (
-		<div className="livecraft-toolbar livecraft-toolbar--editing">
+		<div className="fbedit-toolbar fbedit-toolbar--editing">
 			<SaveIndicator status={ saveStatus } />
 
 			<Button
-				className="livecraft-toolbar__undo"
+				className="fbedit-toolbar__undo"
 				icon={ undo }
-				label={ __( 'Undo', 'livecraft' ) }
+				label={ __( 'Undo', 'frontend-block-editor' ) }
 				onClick={ onUndo }
 				disabled={ ! hasUndo }
 				variant="tertiary"
 			/>
 			<Button
-				className="livecraft-toolbar__redo"
+				className="fbedit-toolbar__redo"
 				icon={ redo }
-				label={ __( 'Redo', 'livecraft' ) }
+				label={ __( 'Redo', 'frontend-block-editor' ) }
 				onClick={ onRedo }
 				disabled={ ! hasRedo }
 				variant="tertiary"
@@ -154,46 +154,46 @@ export default function Toolbar( {
 
 			{ /* Save / Update button */ }
 			<Button
-				className="livecraft-toolbar__save"
+				className="fbedit-toolbar__save"
 				icon={ cloud }
 				onClick={ wrapAction( onSave ) }
 				disabled={ busy || saveStatus === 'saving' }
 				variant="secondary"
 			>
 				{ isPublished
-					? __( 'Update', 'livecraft' )
-					: __( 'Save Draft', 'livecraft' ) }
+					? __( 'Update', 'frontend-block-editor' )
+					: __( 'Save Draft', 'frontend-block-editor' ) }
 			</Button>
 
 			{ /* Publish button (only for drafts/pending) */ }
 			{ ! isPublished && (
 				<Button
-					className="livecraft-toolbar__publish"
+					className="fbedit-toolbar__publish"
 					onClick={ wrapAction( onPublish ) }
 					disabled={ busy }
 					variant="primary"
 				>
-					{ __( 'Publish', 'livecraft' ) }
+					{ __( 'Publish', 'frontend-block-editor' ) }
 				</Button>
 			) }
 
 			{ /* Switch to draft (only for published posts) */ }
 			{ isPublished && (
 				<Button
-					className="livecraft-toolbar__draft"
+					className="fbedit-toolbar__draft"
 					onClick={ wrapAction( onSaveDraft ) }
 					disabled={ busy }
 					variant="secondary"
 				>
-					{ __( 'Switch to Draft', 'livecraft' ) }
+					{ __( 'Switch to Draft', 'frontend-block-editor' ) }
 				</Button>
 			) }
 
 			{ /* Exit edit mode */ }
 			<Button
-				className="livecraft-toolbar__exit"
+				className="fbedit-toolbar__exit"
 				icon={ close }
-				label={ __( 'Exit editor', 'livecraft' ) }
+				label={ __( 'Exit editor', 'frontend-block-editor' ) }
 				onClick={ wrapAction( onExit ) }
 				disabled={ busy }
 				variant="tertiary"

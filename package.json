@@ -1,8 +1,8 @@
 {
-	"name": "livecraft",
-	"version": "0.1.3",
+	"name": "frontend-block-editor",
+	"version": "0.1.4",
 	"private": true,
-	"description": "Frontend inline block editing for WordPress",
+	"description": "Edit WordPress block content inline on the frontend",
 	"scripts": {
 		"build": "wp-scripts build",
 		"start": "wp-scripts start",
@@ -13,7 +13,7 @@
 		"lint:php": "composer phpcs",
 		"lint:php:fix": "composer phpcbf",
 		"lint": "npm run lint:js && npm run lint:css && npm run lint:php",
-		"release": "git archive --format=zip --prefix=livecraft/ -o livecraft.zip HEAD"
+		"release": "git archive --format=zip --prefix=frontend-block-editor/ -o frontend-block-editor.zip HEAD"
 	},
 	"devDependencies": {
 		"@wordpress/icons": "^12.2.0",

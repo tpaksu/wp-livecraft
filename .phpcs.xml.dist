@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="Livecraft">
-	<description>PHP CodeSniffer rules for the Livecraft plugin.</description>
+<ruleset name="Frontend Block Editor">
+	<description>PHP CodeSniffer rules for the Frontend Block Editor plugin.</description>
 
 	<!-- Scan these files -->
 	<file>.</file>
@@ -29,7 +29,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="livecraft"/>
+				<element value="frontend-block-editor"/>
 			</property>
 		</properties>
 	</rule>
@@ -37,8 +37,9 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="livecraft"/>
-				<element value="LIVECRAFT"/>
+				<element value="fbedit"/>
+				<element value="FBEDIT"/>
+				<element value="Frontend_Block_Editor"/>
 			</property>
 		</properties>
 	</rule>

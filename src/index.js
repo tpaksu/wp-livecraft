@@ -7,7 +7,7 @@ import './styles/editor.scss';
 domReady( () => {
 	registerCoreBlocks();
 
-	const root = document.getElementById( 'livecraft-root' );
+	const root = document.getElementById( 'fbedit-root' );
 	if ( root ) {
 		createRoot( root ).render( <App /> );
 	}

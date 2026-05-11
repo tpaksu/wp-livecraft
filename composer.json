@@ -1,6 +1,6 @@
 {
-	"name": "tpaksu/livecraft",
-	"description": "Frontend inline block editing for WordPress",
+	"name": "tpaksu/frontend-block-editor",
+	"description": "Edit WordPress block content inline on the frontend",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
 	"require-dev": {

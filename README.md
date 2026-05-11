@@ -1,14 +1,14 @@
-# Livecraft
+# Frontend Block Editor
 
 Edit your WordPress site the way you actually see it. Click on any text, image, or block right on the page, change it, and it saves. No admin screens, no back-and-forth.
 
-[Try it live on Playground](https://href.li/?https://playground.wordpress.net/#ewogICIkc2NoZW1hIjogImh0dHBzOi8vcGxheWdyb3VuZC53b3JkcHJlc3MubmV0L2JsdWVwcmludC1zY2hlbWEuanNvbiIsCiAgInByZWZlcnJlZFZlcnNpb25zIjogewogICAgInBocCI6ICI4LjMiLAogICAgIndwIjogImxhdGVzdCIKICB9LAogICJwaHBFeHRlbnNpb25CdW5kbGVzIjogWwogICAgImtpdGNoZW4tc2luayIKICBdLAogICJmZWF0dXJlcyI6IHsKICAgICJuZXR3b3JraW5nIjogdHJ1ZQogIH0sCiAgInN0ZXBzIjogWwogICAgewogICAgICAic3RlcCI6ICJzZXRTaXRlT3B0aW9ucyIsCiAgICAgICJvcHRpb25zIjogewogICAgICAgICJibG9nbmFtZSI6ICJMaXZlY3JhZnQgdGVzdCBzaXRlIgogICAgICB9CiAgICB9LAogICAgewogICAgICAic3RlcCI6ICJpbnN0YWxsUGx1Z2luIiwKICAgICAgInBsdWdpbkRhdGEiOiB7CiAgICAgICAgInJlc291cmNlIjogInVybCIsCiAgICAgICAgInVybCI6ICJodHRwczovL2dpdGh1Yi1wcm94eS5jb20vcHJveHkvP3JlcG89dHBha3N1L2xpdmVjcmFmdCZicmFuY2g9bWFpbiIKICAgICAgfSwKICAgICAgIm9wdGlvbnMiOiB7CiAgICAgICAgImFjdGl2YXRlIjogdHJ1ZQogICAgICB9CiAgICB9LAogICAgewogICAgICAic3RlcCI6ICJpbnN0YWxsVGhlbWUiLAogICAgICAidGhlbWVEYXRhIjogewogICAgICAgICJyZXNvdXJjZSI6ICJ3b3JkcHJlc3Mub3JnL3RoZW1lcyIsCiAgICAgICAgInNsdWciOiAic3RvcnktYmxvZyIKICAgICAgfSwKICAgICAgIm9wdGlvbnMiOiB7CiAgICAgICAgImFjdGl2YXRlIjogdHJ1ZQogICAgICB9CiAgICB9LAogICAgewogICAgICAic3RlcCI6ICJpbXBvcnRXeHIiLAogICAgICAiZmlsZSI6IHsKICAgICAgICAicmVzb3VyY2UiOiAidXJsIiwKICAgICAgICAidXJsIjogImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9Xb3JkUHJlc3MvdGhlbWUtdGVzdC1kYXRhL21hc3Rlci90aGVtZXVuaXR0ZXN0ZGF0YS53b3JkcHJlc3MueG1sIgogICAgICB9CiAgICB9LAogICAgewogICAgICAic3RlcCI6ICJsb2dpbiIsCiAgICAgICJ1c2VybmFtZSI6ICJhZG1pbiIsCiAgICAgICJwYXNzd29yZCI6ICJwYXNzd29yZCIKICAgIH0KICBdLAogICJsYW5kaW5nUGFnZSI6ICIvIiwKICAibG9naW4iOiB0cnVlCn0K)
+[Try it live on Playground](https://href.li/?https://playground.wordpress.net/#ewogICIkc2NoZW1hIjogImh0dHBzOi8vcGxheWdyb3VuZC53b3JkcHJlc3MubmV0L2JsdWVwcmludC1zY2hlbWEuanNvbiIsCiAgInByZWZlcnJlZFZlcnNpb25zIjogewogICAgInBocCI6ICI4LjMiLAogICAgIndwIjogImxhdGVzdCIKICB9LAogICJwaHBFeHRlbnNpb25CdW5kbGVzIjogWwogICAgImtpdGNoZW4tc2luayIKICBdLAogICJmZWF0dXJlcyI6IHsKICAgICJuZXR3b3JraW5nIjogdHJ1ZQogIH0sCiAgInN0ZXBzIjogWwogICAgewogICAgICAic3RlcCI6ICJzZXRTaXRlT3B0aW9ucyIsCiAgICAgICJvcHRpb25zIjogewogICAgICAgICJibG9nbmFtZSI6ICJGcm9udGVuZCBCbG9jayBFZGl0b3IgdGVzdCBzaXRlIgogICAgICB9CiAgICB9LAogICAgewogICAgICAic3RlcCI6ICJpbnN0YWxsUGx1Z2luIiwKICAgICAgInBsdWdpbkRhdGEiOiB7CiAgICAgICAgInJlc291cmNlIjogInVybCIsCiAgICAgICAgInVybCI6ICJodHRwczovL2dpdGh1Yi1wcm94eS5jb20vcHJveHkvP3JlcG89dHBha3N1L2Zyb250ZW5kLWJsb2NrLWVkaXRvciZicmFuY2g9bWFpbiIKICAgICAgfSwKICAgICAgIm9wdGlvbnMiOiB7CiAgICAgICAgImFjdGl2YXRlIjogdHJ1ZQogICAgICB9CiAgICB9LAogICAgewogICAgICAic3RlcCI6ICJpbnN0YWxsVGhlbWUiLAogICAgICAidGhlbWVEYXRhIjogewogICAgICAgICJyZXNvdXJjZSI6ICJ3b3JkcHJlc3Mub3JnL3RoZW1lcyIsCiAgICAgICAgInNsdWciOiAic3RvcnktYmxvZyIKICAgICAgfSwKICAgICAgIm9wdGlvbnMiOiB7CiAgICAgICAgImFjdGl2YXRlIjogdHJ1ZQogICAgICB9CiAgICB9LAogICAgewogICAgICAic3RlcCI6ICJpbXBvcnRXeHIiLAogICAgICAiZmlsZSI6IHsKICAgICAgICAicmVzb3VyY2UiOiAidXJsIiwKICAgICAgICAidXJsIjogImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9Xb3JkUHJlc3MvdGhlbWUtdGVzdC1kYXRhL21hc3Rlci90aGVtZXVuaXR0ZXN0ZGF0YS53b3JkcHJlc3MueG1sIgogICAgICB9CiAgICB9LAogICAgewogICAgICAic3RlcCI6ICJsb2dpbiIsCiAgICAgICJ1c2VybmFtZSI6ICJhZG1pbiIsCiAgICAgICJwYXNzd29yZCI6ICJwYXNzd29yZCIKICAgIH0KICBdLAogICJsYW5kaW5nUGFnZSI6ICIvIiwKICAibG9naW4iOiB0cnVlCn0K)
 
 ## What it does
 
 You know the loop: spot a typo on your site, click "Edit Post" in the admin bar, wait for the admin editor to load, find the paragraph, fix the typo, hit update, go back to the frontend to check. For one word.
 
-Livecraft puts the block editor right on your page. You see your content exactly as visitors do, and you edit it right there. Same blocks, same toolbar, same WordPress you already know. Just in the right place.
+Frontend Block Editor puts the block editor right on your page. You see your content exactly as visitors do, and you edit it right there. Same blocks, same toolbar, same WordPress you already know. Just in the right place.
 
 ## Highlights
 
@@ -26,8 +26,8 @@ Livecraft puts the block editor right on your page. You see your content exactly
 1. Clone into your `wp-content/plugins` directory:
 
    ```bash
-   git clone https://github.com/tpaksu/livecraft.git
-   cd livecraft
+   git clone https://github.com/tpaksu/frontend-block-editor.git
+   cd frontend-block-editor
    npm install && npm run build
    ```
 
@@ -35,7 +35,7 @@ Livecraft puts the block editor right on your page. You see your content exactly
 
 3. Visit any post or page on your site while logged in. You'll see a toolbar at the bottom right. Click **Edit Post** (or **Edit Page**) and start editing.
 
-You can also jump straight into edit mode by adding `#livecraft-edit` to any post URL.
+You can also jump straight into edit mode by adding `#fbedit-edit` to any post URL.
 
 ## Requirements
 

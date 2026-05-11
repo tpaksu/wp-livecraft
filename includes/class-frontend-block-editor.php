@@ -1,20 +1,20 @@
 <?php
 /**
- * Livecraft main plugin class.
+ * Frontend Block Editor main plugin class.
  *
  * Handles asset enqueueing and content area wrapping for inline editing.
  *
- * @package Livecraft
+ * @package Frontend_Block_Editor
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Main Livecraft plugin class.
+ * Main Frontend Block Editor plugin class.
  *
  * Registers hooks for frontend inline editing.
  */
-class Livecraft {
+class Frontend Block Editor {
 
 	/**
 	 * Whether the current request should be instrumented.
@@ -60,7 +60,7 @@ class Livecraft {
 			return;
 		}
 
-		$asset_file = LIVECRAFT_PLUGIN_DIR . 'build/index.asset.php';
+		$asset_file = FBEDIT_PLUGIN_DIR . 'build/index.asset.php';
 		if ( ! file_exists( $asset_file ) ) {
 			return;
 		}
@@ -68,8 +68,8 @@ class Livecraft {
 		$asset = require $asset_file;
 
 		wp_enqueue_script(
-			'livecraft-editor',
-			LIVECRAFT_PLUGIN_URL . 'build/index.js',
+			'fbedit-editor',
+			FBEDIT_PLUGIN_URL . 'build/index.js',
 			$asset['dependencies'],
 			$asset['version'],
 			true
@@ -110,10 +110,10 @@ class Livecraft {
 		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core hook.
 		do_action( 'enqueue_block_editor_assets' );
 
-		if ( file_exists( LIVECRAFT_PLUGIN_DIR . 'build/index.css' ) ) {
+		if ( file_exists( FBEDIT_PLUGIN_DIR . 'build/index.css' ) ) {
 			wp_enqueue_style(
-				'livecraft-editor',
-				LIVECRAFT_PLUGIN_URL . 'build/index.css',
+				'fbedit-editor',
+				FBEDIT_PLUGIN_URL . 'build/index.css',
 				array(),
 				$asset['version']
 			);
@@ -142,8 +142,8 @@ class Livecraft {
 		$editor_style_urls = $this->get_editor_style_urls();
 
 		wp_add_inline_script(
-			'livecraft-editor',
-			'var livecraft = ' . wp_json_encode(
+			'fbedit-editor',
+			'var frontend-block-editor = ' . wp_json_encode(
 				array(
 					'postId'       => get_the_ID(),
 					'postType'     => get_post_type(),
@@ -220,7 +220,7 @@ class Livecraft {
 		}
 
 		return sprintf(
-			'<span id="livecraft-title" data-livecraft-post="%d">%s</span>',
+			'<span id="fbedit-title" data-fbedit-post="%d">%s</span>',
 			intval( $post_id ),
 			$title
 		);
@@ -241,7 +241,7 @@ class Livecraft {
 		$post_type = get_post_type();
 
 		return sprintf(
-			'<div id="livecraft-content" data-livecraft-post="%d" data-livecraft-post-type="%s">%s</div>',
+			'<div id="fbedit-content" data-fbedit-post="%d" data-fbedit-post-type="%s">%s</div>',
 			intval( $post_id ),
 			esc_attr( $post_type ),
 			$content
@@ -256,18 +256,18 @@ class Livecraft {
 			return;
 		}
 
-		echo '<div id="livecraft-root"></div>';
+		echo '<div id="fbedit-root"></div>';
 	}
 
 	/**
-	 * Add body class when Livecraft is active.
+	 * Add body class when Frontend Block Editor is active.
 	 *
 	 * @param array $classes Existing body classes.
 	 * @return array
 	 */
 	public function add_body_class( $classes ) {
 		if ( $this->should_instrument ) {
-			$classes[] = 'livecraft-enabled';
+			$classes[] = 'fbedit-enabled';
 		}
 		return $classes;
 	}

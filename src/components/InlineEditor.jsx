@@ -22,9 +22,9 @@ import { fetchPost } from '../utils/api';
 const SAVE_DEBOUNCE_MS = 1500;
 
 function loadEditorStyles() {
-	const urls = window.livecraft?.editorStyles || {};
+	const urls = window.fbedit?.editorStyles || {};
 	Object.entries( urls ).forEach( ( [ handle, url ] ) => {
-		const id = `livecraft-dynamic-style-${ handle }`;
+		const id = `fbedit-dynamic-style-${ handle }`;
 		if ( ! document.getElementById( id ) ) {
 			const link = document.createElement( 'link' );
 			link.id = id;
@@ -37,7 +37,7 @@ function loadEditorStyles() {
 
 function removeEditorStyles() {
 	document
-		.querySelectorAll( '[id^="livecraft-dynamic-style-"]' )
+		.querySelectorAll( '[id^="fbedit-dynamic-style-"]' )
 		.forEach( ( el ) => el.remove() );
 }
 
@@ -61,7 +61,7 @@ const InlineEditor = forwardRef( function InlineEditor(
 	// Unlike dirtyRef, this is NOT cleared by auto-save.
 	const sessionDirtyRef = useRef( false );
 	const postStatusRef = useRef( 'publish' );
-	const { postId, postType } = window.livecraft;
+	const { postId, postType } = window.fbedit;
 
 	// Undo/redo history stack.
 	const historyRef = useRef( [] );
@@ -262,7 +262,7 @@ const InlineEditor = forwardRef( function InlineEditor(
 
 	// On mount: set up title and editor container.
 	useEffect( () => {
-		const contentEl = document.getElementById( 'livecraft-content' );
+		const contentEl = document.getElementById( 'fbedit-content' );
 		if ( ! contentEl ) {
 			setError( 'Content area not found.' );
 			return;
@@ -270,11 +270,11 @@ const InlineEditor = forwardRef( function InlineEditor(
 
 		loadEditorStyles();
 
-		const titleEl = document.getElementById( 'livecraft-title' );
+		const titleEl = document.getElementById( 'fbedit-title' );
 		if ( titleEl ) {
 			titleElRef.current = titleEl;
 			titleEl.contentEditable = 'true';
-			titleEl.classList.add( 'livecraft-editable-title' );
+			titleEl.classList.add( 'fbedit-editable-title' );
 			titleEl.addEventListener( 'input', () => {
 				dirtyRef.current = true;
 				sessionDirtyRef.current = true;
@@ -293,15 +293,15 @@ const InlineEditor = forwardRef( function InlineEditor(
 		// Mark existing children so we can remove them after the
 		// editor is ready, avoiding a flash of empty content.
 		Array.from( contentEl.children ).forEach( ( child ) => {
-			child.setAttribute( 'data-livecraft-original', '' );
+			child.setAttribute( 'data-fbedit-original', '' );
 		} );
 
 		const editorDiv = document.createElement( 'div' );
-		editorDiv.id = 'livecraft-inline-editor';
+		editorDiv.id = 'fbedit-inline-editor';
 		contentEl.appendChild( editorDiv );
 		editorContainerRef.current = editorDiv;
 
-		document.body.classList.add( 'livecraft-editing' );
+		document.body.classList.add( 'fbedit-editing' );
 
 		fetchPost( postType, postId )
 			.then( ( post ) => {
@@ -314,7 +314,7 @@ const InlineEditor = forwardRef( function InlineEditor(
 
 				// Remove original content now that the editor is ready.
 				contentEl
-					.querySelectorAll( '[data-livecraft-original]' )
+					.querySelectorAll( '[data-fbedit-original]' )
 					.forEach( ( el ) => el.remove() );
 
 				// Restore scroll position after the editor swap.
@@ -325,11 +325,11 @@ const InlineEditor = forwardRef( function InlineEditor(
 			} );
 
 		return () => {
-			document.body.classList.remove( 'livecraft-editing' );
+			document.body.classList.remove( 'fbedit-editing' );
 			if ( titleElRef.current ) {
 				titleElRef.current.contentEditable = 'false';
 				titleElRef.current.classList.remove(
-					'livecraft-editable-title'
+					'fbedit-editable-title'
 				);
 			}
 			removeEditorStyles();
@@ -367,7 +367,7 @@ const InlineEditor = forwardRef( function InlineEditor(
 	);
 
 	if ( error ) {
-		return <div className="livecraft-inline-error">{ error }</div>;
+		return <div className="fbedit-inline-error">{ error }</div>;
 	}
 
 	if ( ! ready || ! blocks || ! editorContainerRef.current ) {
@@ -385,7 +385,7 @@ const InlineEditor = forwardRef( function InlineEditor(
 					hasFixedToolbar: false,
 					focusMode: false,
 					hasInlineToolbar: false,
-					styles: window.livecraft?.themeStyles || [],
+					styles: window.fbedit?.themeStyles || [],
 					mediaUpload( {
 						allowedTypes,
 						additionalData,

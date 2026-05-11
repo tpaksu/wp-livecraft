@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * Registers hooks for frontend inline editing.
  */
-class Frontend Block Editor {
+class Frontend_Block_Editor {
 
 	/**
 	 * Whether the current request should be instrumented.

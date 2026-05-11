@@ -86,4 +86,4 @@ Open an issue at https://github.com/tpaksu/frontend-block-editor/issues.
 == Upgrade Notice ==
 
 = 0.1.4 =
-Plugin renamed to "Frontend Block Editor" and slug changed to `frontend-block-editor`. The old `livecraft-*` CSS class names became `fbedit-*`, the JS global moved from `window.livecraft` to `window.fbedit`, and the deep-link hash is now `#fbedit-edit`. Custom CSS or code targeting the old selectors needs to be updated. Deactivate and reactivate after upgrading.
+Plugin renamed to "Frontend Block Editor". Slug, text domain, and the old `livecraft-*` selectors became `frontend-block-editor` / `fbedit-*`. Update any custom CSS or JS targeting the old prefixes, then deactivate and reactivate.
